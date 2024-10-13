@@ -15,11 +15,18 @@ class TodoPage extends StatefulWidget {
 TextEditingController _myController = TextEditingController();
 
 class _TodoPageState extends State<TodoPage> {
-
 // reference the hive box
-final _myBox = Hive.openBox('mybox');
-TodoDatabase db = TodoDatabase();
+  final _myBox = Hive.box('mybox');
+  TodoDatabase db = TodoDatabase();
 
+  @override
+  void initState() {
+// if app is opened for the first time. then run this method
+    if (_myBox.get('TODOLIST') == null) {
+      db.createInitialData();
+    }
+    super.initState();
+  }
 
 //todo list
   // List<Todo> todos = [
@@ -61,7 +68,7 @@ TodoDatabase db = TodoDatabase();
   // delete task
   void deletask(int index) {
     setState(() {
-     db.todos.removeAt(index);
+      db.todos.removeAt(index);
     });
   }
 
