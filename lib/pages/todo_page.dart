@@ -24,6 +24,8 @@ class _TodoPageState extends State<TodoPage> {
 // if app is opened for the first time. then run this method
     if (_myBox.get('TODOLIST') == null) {
       db.createInitialData();
+    } else {
+      db.loadData();
     }
     super.initState();
   }
@@ -49,6 +51,7 @@ class _TodoPageState extends State<TodoPage> {
 
       Navigator.of(context).pop();
     });
+    db.updateDatabse();
   }
 
   //create new task method
@@ -70,6 +73,7 @@ class _TodoPageState extends State<TodoPage> {
     setState(() {
       db.todos.removeAt(index);
     });
+    db.updateDatabse();
   }
 
   @override
