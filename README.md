@@ -9,11 +9,10 @@ A simple, intuitive Todo application built with Flutter. This app allows users t
 - Clean and user-friendly interface
 
 ## Screenshots
-<img width="357" alt="SCR-20241014-bhwr" src="https://github.com/user-attachments/assets/ca08b673-d1c3-4424-9557-b7080076ec99"> 
+![todos](https://github.com/user-attachments/assets/ca08b673-d1c3-4424-9557-b7080076ec99)
+![add new todo](https://github.com/user-attachments/assets/b4377242-4a0d-4af7-8044-d1c19784a4d2)
+![delete todo](https://github.com/user-attachments/assets/c216111b-8a5f-48eb-be91-20a37282fea0)
 
-<img width="351" alt="SCR-20241014-bije" src="https://github.com/user-attachments/assets/b4377242-4a0d-4af7-8044-d1c19784a4d2">
-
-<img width="358" alt="SCR-20241014-bipn" src="https://github.com/user-attachments/assets/c216111b-8a5f-48eb-be91-20a37282fea0">
 
 
 
