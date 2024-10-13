@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import 'pages/todo_page.dart';
 
-void main() {
+void main() async {
+//initialize hive
+await Hive.initFlutter();
+
+//open the box
+var box = Hive.openBox('my box');
+
   runApp(const MyApp());
 }
 
