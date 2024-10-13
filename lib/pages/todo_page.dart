@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:todo_app/data/todo_database.dart';
 import 'package:todo_app/utils/dialog_box.dart';
 import 'package:todo_app/utils/todo_tile.dart';
 
@@ -13,27 +15,43 @@ class TodoPage extends StatefulWidget {
 TextEditingController _myController = TextEditingController();
 
 class _TodoPageState extends State<TodoPage> {
+// reference the hive box
+  final _myBox = Hive.box('mybox');
+  TodoDatabase db = TodoDatabase();
+
+  @override
+  void initState() {
+// if app is opened for the first time. then run this method
+    if (_myBox.get('TODOLIST') == null) {
+      db.createInitialData();
+    } else {
+      db.loadData();
+    }
+    super.initState();
+  }
+
 //todo list
-  List<Todo> todos = [
-    Todo(name: 'play football', completed: false),
-    Todo(name: 'buy beans and bread', completed: false),
-  ];
+  // List<Todo> todos = [
+  //   Todo(name: 'play football', completed: false),
+  //   Todo(name: 'buy beans and bread', completed: false),
+  // ];
 
   //checkbox tapped
   void checkboxChanged(bool? value, int index) {
     setState(() {
-      todos[index].completed = value ?? false;
+      db.todos[index].completed = value ?? false;
     });
   }
 
   // save new task
   void saveNewTask() {
     setState(() {
-      todos.add(Todo(name: _myController.text, completed: false));
+      db.todos.add(Todo(name: _myController.text, completed: false));
       _myController.clear();
 
       Navigator.of(context).pop();
     });
+    db.updateDatabse();
   }
 
   //create new task method
@@ -53,8 +71,9 @@ class _TodoPageState extends State<TodoPage> {
   // delete task
   void deletask(int index) {
     setState(() {
-      todos.removeAt(index);
+      db.todos.removeAt(index);
     });
+    db.updateDatabse();
   }
 
   @override
@@ -71,22 +90,22 @@ class _TodoPageState extends State<TodoPage> {
       body: ListView.builder(
         itemBuilder: (context, index) {
           return TodoTile(
-            taskName: todos[index].name,
-            taskCompleted: todos[index].completed,
+            taskName: db.todos[index].name,
+            taskCompleted: db.todos[index].completed,
             onChanged: (value) => checkboxChanged(value, index),
             deleteFunction: (p0) => deletask(index),
           );
         },
-        itemCount: todos.length,
+        itemCount: db.todos.length,
       ),
       backgroundColor: Colors.green,
     );
   }
 }
 
-class Todo {
-  String name;
-  bool completed;
+// class Todo {
+//   String name;
+//   bool completed;
 
-  Todo({required this.name, required this.completed});
-}
+//   Todo({required this.name, required this.completed});
+// }
